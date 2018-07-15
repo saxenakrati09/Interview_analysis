@@ -1,0 +1,90 @@
+---
+title: "The Interview Attendance Problem"
+output: html_notebook
+---
+
+Read the data
+
+```{r}
+library(readr)
+df_interview <- read_csv("Interview.csv")
+head(df_interview)
+```
+
+```{r}
+dim(df_interview)
+```
+
+It can be seen that there are NA values in many columns and last 5 columns are empty. So let's get rid of them first.
+```{r}
+df_interview <- subset(df_interview, select = -c(X24, X25, X26, X27, X28))
+head(df_interview)
+```
+
+There are long names of columns, that can be quite difficult to handle. Let's change the column names.
+
+```{r}
+colnames(df_interview)
+```
+
+```{r}
+new_col <- c("Date", "Client_name", "Industry", "Location",
+             "Position", "SkillSet", "Interview_type", "Candidate_name",
+             "Gender", "Current_location", "Job_location", "Venue_of_interview",
+             "Candidate_native_location", "Permissions_obtained", "Unscheduled_meetings",
+             "follow_up_attendance", "Alt_number", "Printout_taken", "Clear_details",
+             "Call_letter", "Expected_attendance", "Observed_attendance", "Marital_status")
+colnames(df_interview) <- new_col
+colnames(df_interview)
+```
+
+# Data Cleaning
+
+Let's check each column for inconsistencies in the data
+
+Let's check Date...
+```{r}
+unique(df_interview$Date)
+```
+
+There are different formats of the date here.
+
+```{r}
+library(lubridate)
+df_interview$Date <- gsub("&.*", "", df_interview$Date)
+df_interview$Date <- dmy(df_interview$Date)
+unique(df_interview$Date)
+```
+
+Let's check Client_name...
+```{r}
+unique(df_interview$Client_name)
+```
+
+```{r}
+df_interview$Client_name <- gsub("Standard Chartered Bank Chennai", "Standard Chartered Bank", df_interview$Client_name)
+df_interview$Client_name <- gsub("Aon hewitt Gurgaon", "Hewitt", df_interview$Client_name)
+df_interview$Client_name <- gsub("Aon Hewitt",  "Hewitt", df_interview$Client_name)
+unique(df_interview$Client_name)
+```
+
+Let's check Industry...
+```{r}
+unique(df_interview$Industry)
+```
+
+```{r}
+df_interview$Industry <- gsub("IT Products and Services", "IT", df_interview$Industry)
+df_interview$Industry <- gsub("IT Services", "IT", df_interview$Industry)
+unique(df_interview$Industry)
+```
+
+Let's check Location...
+```{r}
+unique(df_interview$Location)
+```
+
+```{r}
+df_interview$
+```
+
