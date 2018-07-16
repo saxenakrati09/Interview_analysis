@@ -85,6 +85,79 @@ unique(df_interview$Location)
 ```
 
 ```{r}
-df_interview$
+df_interview$Location <- gsub("chennai", "Chennai", df_interview$Location)
+df_interview$Location <- gsub("Gurgaonr", "Gurgaon", df_interview$Location)
+df_interview$Location <- gsub("- Cochin-", "Cochin", df_interview$Location)
+df_interview$Location <- gsub("CHENNAI", "Chennai", df_interview$Location)
+```
+
+```{r}
+unique(df_interview$Location)
+```
+
+Let's check Position...
+
+```{r}
+unique(df_interview$Position)
+```
+This is okay!
+
+Let's check Skillset
+```{r}
+unique(df_interview$SkillSet)
+```
+Too many unique values, have to deal with it later!
+
+
+Let's check Interview_type
+```{r}
+unique(df_interview$Interview_type)
+```
+
+```{r}
+df_interview$Interview_type <- gsub("Scheduled Walk In", "Scheduled Walkin", df_interview$Interview_type)
+df_interview$Interview_type <- gsub("Sceduled walkin", "Scheduled Walkin", df_interview$Interview_type)
+unique(df_interview$Interview_type)
+```
+
+Let's check Current Location
+```{r}
+unique(df_interview$Current_location)
+```
+
+```{r}
+df_interview$Current_location <- gsub("- Cochin-", "Cochin", df_interview$Current_location)
+```
+
+Let's check job location
+```{r}
+unique(df_interview$Job_location)
+```
+```{r}
+df_interview$Job_location <- gsub("- Cochin-", "Cochin", df_interview$Job_location)
+```
+
+Let's check venue of interview
+```{r}
+unique(df_interview$Venue_of_interview)
+```
+```{r}
+df_interview$Venue_of_interview <- gsub("- Cochin-", "Cochin", df_interview$Venue_of_interview)
+```
+
+Let's check Candidate native location
+```{r}
+unique(df_interview$Candidate_native_location)
+```
+
+```{r}
+df_interview$Candidate_native_location <- gsub("Delhi /NCR", "Delhi", df_interview$Candidate_native_location)
+df_interview$Candidate_native_location <- gsub("- Cochin-", "Cochin", df_interview$Candidate_native_location)
+```
+
+Let's ceck Permission obtained
+
+```{r}
+unique(df_interview$Permissions_obtained)
 ```
 
