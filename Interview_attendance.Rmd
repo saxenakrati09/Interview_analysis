@@ -285,7 +285,114 @@ df_interview$Expected_attendance <- gsub("10.30 am", "yes", df_interview$Expecte
 unique(df_interview$Expected_attendance)
 ```
 
+Let's check observed attendance
 ```{r}
-
+unique(df_interview$Observed_attendance)
 ```
+
+Let's check marital status
+
+```{r}
+unique(df_interview$Marital_status)
+```
+
+Since Skillset column has huge number of unique values and it is difficult to clean it. Let us drop it and go ahead with other columns.
+
+```{r}
+head(df_interview)
+```
+
+```{r}
+dim(df_interview)
+```
+
+Let us remove the rows with NA entries. 
+```{r}
+newinterview <- na.omit(df_interview)
+dim(newinterview)
+```
+
+```{r}
+unique(newinterview$Date)
+```
+There are dates after 2018 also, and may be wrong entries. So let us omit those entries.
+
+```{r}
+library(dplyr)
+newinterview <- newinterview %>% filter(Date < "2019-01-01") 
+newinterview <- newinterview[,-which(colnames(newinterview) == "SkillSet")]
+
+unique(newinterview$Date)
+
+dim(newinterview)
+```
+
+So we have a dataset of 962 entries in 22 columns.
+
+```{r}
+head(newinterview)
+```
+
+Split date into day, month, year and weekday
+```{r}
+newinterview$Year <- year(newinterview$Date)
+newinterview$Month <- month(newinterview$Date)
+newinterview$Day <- day(newinterview$Date)
+newinterview$weekday <- wday(newinterview$Date)
+newinterview <- newinterview[,-which(colnames(newinterview) == "Date")]
+```
+
+```{r}
+head(newinterview)
+```
+
+```{r}
+glimpse(newinterview)
+```
+
+Convert character columns to factors
+
+```{r}
+character_vars <- lapply(newinterview, class) == "character"
+newinterview[, character_vars] <- lapply(newinterview[, character_vars], as.factor)
+glimpse(newinterview)
+```
+
+"Observed_attendance" is what we need to predict here.
+Let us convert factor to numeric.
+
+```{r}
+df <- newinterview
+character_vars <- lapply(df, class) == "factor"
+df[, character_vars] <- lapply(df[, character_vars], as.numeric)
+head(df)
+```
+
+```{r}
+glimpse(df)
+```
+
+```{r}
+factor_cols = c("Client_name", "Industry", "Location",
+             "Position", "Interview_type", "Candidate_name",
+             "Gender", "Current_location", "Job_location", "Venue_of_interview",
+             "Candidate_native_location", "Permissions_obtained", "Unscheduled_meetings",
+             "follow_up_attendance", "Alt_number", "Printout_taken", "Clear_details",
+             "Call_letter", "Expected_attendance", "Observed_attendance", "Marital_status")
+```
+
+Find the baseline of Prediction.
+```{r}
+as.data.frame(table(newinterview$Observed_attendance))
+baseline = (670 / (670 + 292))
+baseline
+```
+
+```{r}
+library(ggplot2)
+ggplot(data = as.data.frame(table(newinterview$Observed_attendance)), aes(Var1, Freq, fill=Var1)) + 
+  geom_bar(position = "dodge", stat = "identity")
+```
+
+Almost 70% of the entries in Observed attendance is "Yes". So the baseline prediction is 70% Yes. We have to make the prediction models having accuracy more than the baseline accuracy.
 
