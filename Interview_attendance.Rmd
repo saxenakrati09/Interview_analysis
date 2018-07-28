@@ -38,6 +38,37 @@ colnames(df_interview) <- new_col
 colnames(df_interview)
 ```
 
+```{r}
+summary(df_interview)
+```
+All the columns, except the Date column are characters. So let us convert all into lowercase for simplicity.
+
+```{r}
+df_interview$Client_name <- sapply(df_interview$Client_name, tolower)
+df_interview$Industry <- sapply(df_interview$Industry, tolower)
+df_interview$Location <- sapply(df_interview$Location, tolower)
+df_interview$Position <- sapply(df_interview$Position, tolower)
+df_interview$SkillSet <- sapply(df_interview$SkillSet, tolower)
+df_interview$Interview_type <- sapply(df_interview$Interview_type, tolower)
+df_interview$Candidate_name <- sapply(df_interview$Candidate_name, tolower)
+df_interview$Gender <- sapply(df_interview$Gender, tolower)
+df_interview$Current_location <- sapply(df_interview$Current_location, tolower)
+df_interview$Job_location <- sapply(df_interview$Job_location, tolower)
+df_interview$Venue_of_interview <- sapply(df_interview$Venue_of_interview, tolower)
+df_interview$Candidate_native_location <- sapply(df_interview$Candidate_native_location, tolower)
+df_interview$Permissions_obtained <- sapply(df_interview$Permissions_obtained, tolower)
+df_interview$Unscheduled_meetings <- sapply(df_interview$Unscheduled_meetings, tolower)
+df_interview$follow_up_attendance <- sapply(df_interview$follow_up_attendance, tolower)
+df_interview$Alt_number <- sapply(df_interview$Alt_number, tolower)
+df_interview$Printout_taken <- sapply(df_interview$Printout_taken, tolower)
+df_interview$Clear_details <- sapply(df_interview$Clear_details, tolower)
+df_interview$Call_letter <- sapply(df_interview$Call_letter, tolower)
+df_interview$Expected_attendance <- sapply(df_interview$Expected_attendance, tolower)
+df_interview$Observed_attendance <- sapply(df_interview$Observed_attendance, tolower)
+df_interview$Marital_status <- sapply(df_interview$Marital_status, tolower)
+
+```
+
 # Data Cleaning
 
 Let's check each column for inconsistencies in the data
@@ -62,11 +93,12 @@ unique(df_interview$Client_name)
 ```
 
 ```{r}
-df_interview$Client_name <- gsub("Standard Chartered Bank Chennai", "Standard Chartered Bank", df_interview$Client_name)
-df_interview$Client_name <- gsub("Aon hewitt Gurgaon", "Hewitt", df_interview$Client_name)
-df_interview$Client_name <- gsub("Aon Hewitt",  "Hewitt", df_interview$Client_name)
+df_interview$Client_name <- gsub("standard chartered bank chennai", "standard chartered bank", df_interview$Client_name)
+df_interview$Client_name <- gsub("aon hewitt gurgaon", "hewitt", df_interview$Client_name)
+df_interview$Client_name <- gsub("aon hewitt",  "hewitt", df_interview$Client_name)
 unique(df_interview$Client_name)
 ```
+
 
 Let's check Industry...
 ```{r}
@@ -74,8 +106,8 @@ unique(df_interview$Industry)
 ```
 
 ```{r}
-df_interview$Industry <- gsub("IT Products and Services", "IT", df_interview$Industry)
-df_interview$Industry <- gsub("IT Services", "IT", df_interview$Industry)
+df_interview$Industry <- gsub("it products and services", "it", df_interview$Industry)
+df_interview$Industry <- gsub("it services", "it", df_interview$Industry)
 unique(df_interview$Industry)
 ```
 
@@ -85,10 +117,8 @@ unique(df_interview$Location)
 ```
 
 ```{r}
-df_interview$Location <- gsub("chennai", "Chennai", df_interview$Location)
-df_interview$Location <- gsub("Gurgaonr", "Gurgaon", df_interview$Location)
-df_interview$Location <- gsub("- Cochin-", "Cochin", df_interview$Location)
-df_interview$Location <- gsub("CHENNAI", "Chennai", df_interview$Location)
+df_interview$Location <- gsub("gurgaonr", "gurgaon", df_interview$Location)
+df_interview$Location <- gsub("- cochin-", "cochin", df_interview$Location)
 ```
 
 ```{r}
@@ -115,8 +145,8 @@ unique(df_interview$Interview_type)
 ```
 
 ```{r}
-df_interview$Interview_type <- gsub("Scheduled Walk In", "Scheduled Walkin", df_interview$Interview_type)
-df_interview$Interview_type <- gsub("Sceduled walkin", "Scheduled Walkin", df_interview$Interview_type)
+df_interview$Interview_type <- gsub("scheduled walk in", "scheduled walkin", df_interview$Interview_type)
+df_interview$Interview_type <- gsub("sceduled walkin", "scheduled walkin", df_interview$Interview_type)
 unique(df_interview$Interview_type)
 ```
 
@@ -126,7 +156,7 @@ unique(df_interview$Current_location)
 ```
 
 ```{r}
-df_interview$Current_location <- gsub("- Cochin-", "Cochin", df_interview$Current_location)
+df_interview$Current_location <- gsub("- cochin-", "cochin", df_interview$Current_location)
 ```
 
 Let's check job location
@@ -134,7 +164,7 @@ Let's check job location
 unique(df_interview$Job_location)
 ```
 ```{r}
-df_interview$Job_location <- gsub("- Cochin-", "Cochin", df_interview$Job_location)
+df_interview$Job_location <- gsub("- cochin-", "cochin", df_interview$Job_location)
 ```
 
 Let's check venue of interview
@@ -142,7 +172,7 @@ Let's check venue of interview
 unique(df_interview$Venue_of_interview)
 ```
 ```{r}
-df_interview$Venue_of_interview <- gsub("- Cochin-", "Cochin", df_interview$Venue_of_interview)
+df_interview$Venue_of_interview <- gsub("- cochin-", "cochin", df_interview$Venue_of_interview)
 ```
 
 Let's check Candidate native location
@@ -151,13 +181,111 @@ unique(df_interview$Candidate_native_location)
 ```
 
 ```{r}
-df_interview$Candidate_native_location <- gsub("Delhi /NCR", "Delhi", df_interview$Candidate_native_location)
-df_interview$Candidate_native_location <- gsub("- Cochin-", "Cochin", df_interview$Candidate_native_location)
+df_interview$Candidate_native_location <- gsub("delhi /ncr", "delhi", df_interview$Candidate_native_location)
+df_interview$Candidate_native_location <- gsub("- cochin-", "cochin", df_interview$Candidate_native_location)
 ```
 
-Let's ceck Permission obtained
+Let's check Permission obtained
 
 ```{r}
 unique(df_interview$Permissions_obtained)
+```
+
+```{r}
+df_interview$Permissions_obtained <- gsub("na", NA, df_interview$Permissions_obtained)
+
+
+df_interview$Permissions_obtained <- gsub("yet to confirm", "no", df_interview$Permissions_obtained)
+df_interview$Permissions_obtained <- gsub("not yet", "no", df_interview$Permissions_obtained)
+unique(df_interview$Permissions_obtained)
+```
+
+
+Let's check Unscheduled meetings
+```{r}
+unique(df_interview$Unscheduled_meetings)
+```
+
+```{r}
+df_interview$Unscheduled_meetings <- gsub("na", NA, df_interview$Unscheduled_meetings)
+df_interview$Unscheduled_meetings <- gsub("not sure", "unsure", df_interview$Unscheduled_meetings)
+df_interview$Unscheduled_meetings <- gsub("cant say", "unsure", df_interview$Unscheduled_meetings)
+unique(df_interview$Unscheduled_meetings)
+```
+
+Let's check follow-up attendance
+```{r}
+unique(df_interview$follow_up_attendance)
+```
+
+```{r}
+df_interview$follow_up_attendance <- gsub("na", NA, df_interview$follow_up_attendance)
+df_interview$follow_up_attendance <- gsub("no dont", "no", df_interview$follow_up_attendance)
+unique(df_interview$follow_up_attendance)
+```
+
+Let's check Alt Number
+```{r}
+unique(df_interview$Alt_number)
+```
+
+```{r}
+df_interview$Alt_number <- gsub("na", NA, df_interview$Alt_number)
+df_interview$Alt_number <- gsub("no i have only thi number", "no", df_interview$Alt_number)
+unique(df_interview$Alt_number)
+```
+
+Let's check Printout taken
+```{r}
+unique(df_interview$Printout_taken)
+```
+
+```{r}
+df_interview$Printout_taken <- gsub("na", NA, df_interview$Printout_taken)
+df_interview$Printout_taken <- gsub("not yet", "no", df_interview$Printout_taken)
+df_interview$Printout_taken <- gsub("no- will take it soon", "no", df_interview$Printout_taken)
+unique(df_interview$Printout_taken)
+```
+
+Let;s check clear details
+```{r}
+unique(df_interview$Clear_details)
+```
+
+```{r}
+df_interview$Clear_details <- gsub("na", NA, df_interview$Clear_details)
+df_interview$Clear_details <- gsub("no- i need to check", "no", df_interview$Clear_details)
+unique(df_interview$Clear_details)
+```
+
+Let's check call letter
+```{r}
+unique(df_interview$Call_letter)
+```
+
+```{r}
+df_interview$Call_letter <- gsub("na", NA, df_interview$Call_letter)
+df_interview$Call_letter <- gsub("havent checked", "unsure", df_interview$Call_letter)
+df_interview$Call_letter <- gsub("need to check", "unsure", df_interview$Call_letter)
+df_interview$Call_letter <- gsub("not sure", "unsure", df_interview$Call_letter)
+df_interview$Call_letter <- gsub("yet to check", "unsure", df_interview$Call_letter)
+df_interview$Call_letter <- gsub("not yet", "unsure", df_interview$Call_letter)
+unique(df_interview$Call_letter)
+```
+
+Lets' check expected attendance
+
+```{r}
+unique(df_interview$Expected_attendance)
+```
+
+```{r}
+df_interview$Expected_attendance <- gsub("11:00 am", "yes", df_interview$Expected_attendance)
+df_interview$Expected_attendance <- gsub("10.30 am", "yes", df_interview$Expected_attendance)
+unique(df_interview$Expected_attendance)
+```
+
+```{r}
+
 ```
 
